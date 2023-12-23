@@ -1,0 +1,26 @@
+<div *ngIf="this.drawer">
+  <div class="btn-group controls" role="group">
+    <button class="btn btn-lg btn-outline-secondary" (click)="this.prev()" [disabled]="this.drawer.drawnNumbers <= 0">Back</button>
+    <button class="btn btn-lg btn-outline-info" (click)="this.next()" [disabled]="!this.drawer.hasNext()">Next</button>
+  </div>
+  <div class="drawer">
+    <div *ngIf="this.drawer.drawnNumbers > 0" class="currentdraw">
+      <div *ngIf="this.spinning" class="spinning">
+        <img src="./assets/spinning-bingo.gif" alt="Spinning the bingo wheel" />
+      </div>
+      <section *ngIf="!this.spinning && this.drawer.drawnNumbers > 0" class="big stage">
+        <figure class="ball">
+          <span class="number rolling">{{ this.drawer.lastDrawnNumber }}</span>
+        </figure>
+      </section>
+    </div>
+    <hr />
+    <div class="previousDraws">
+      <section *ngFor="let drawnNumber of lastDrawns; index as i; trackBy: trackByFn" class="small stage">
+        <figure class="ball">
+          <span class="number">{{ drawnNumber }}</span>
+        </figure>
+      </section>
+    </div>
+  </div>
+</div>
