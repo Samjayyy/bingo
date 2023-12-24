@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { DOCUMENT } from "@angular/common";
 import { GaService } from "src/app/core/services/ext/ga.service";
 import { BingoStore } from "src/app/core/services/store/bingo.store";
+import { generateRandomString } from "src/app/core/util/rand";
 
 @Component({
   selector: "app-start-game",
@@ -29,7 +30,7 @@ export class StartGameComponent implements OnInit {
     this.bingoStore.createNew(this.gameid, this.numberOfBalls);
     this.gaService.emitEvent(
       "bingo",
-      "start",
+      "drawer",
       this.gameid,
       1,
     );
@@ -41,15 +42,6 @@ export class StartGameComponent implements OnInit {
   }
 
   public takeRandom(): void {
-    this.gameid = this.generateRandomString(5);
-  }
-
-  private generateRandomString(length: number): string {
-    const charSet = "abcdefghijklmnopqrstuvwxyz0123456789";
-    let res = "";
-    for (let i = 0; i < length; i++) {
-      res += charSet.charAt(Math.floor(Math.random() * charSet.length));
-    }
-    return res;
+    this.gameid = generateRandomString(5);
   }
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BingoDrawerComponent } from './components/drawer/drawer.component';
 import { StartGameComponent } from './components/start-game/start-game.component';
+import { BingoCardComponent } from './components/bingo-card/bingo-card.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'drawer',
     component: BingoDrawerComponent,
+  },
+  {
+    path: 'card',
+    component: BingoCardComponent,
   }
 ];
 

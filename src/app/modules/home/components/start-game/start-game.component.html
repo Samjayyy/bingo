@@ -1,23 +1,12 @@
 <div>
+    <h3>New Bingo Draw</h3>
     <form>
         <div class="form-row">
             <div class="form-group col">
                 <label for="numberOfBalls">Ball count:</label>
                 <input type="number" name="numberOfBalls" id="numberOfBalls" class="form-control"
-                    [(ngModel)]="this.numberOfBalls" />
+                    [(ngModel)]="this.numberOfBalls" min="2" max="1000" />
             </div>
-            <!-- <div class="form-group col">
-                <div class="form-row">
-                    <div class="form-group col">
-                        <label for="cardRowSize">Rows:</label>
-                        <input type="number" name="cardRowSize" id="cardRowSize" class="form-control" [(ngModel)]="this.cardSize" disabled />
-                    </div>
-                    <div class="form-group col">
-                        <label for="cardColSize">Columns:</label>
-                        <input type="number" name="cardColSize" id="cardColSize" class="form-control" [(ngModel)]="this.cardSize" disabled />
-                    </div>
-                </div>
-            </div> -->
         </div>
         <div class="form-group">
             <div class="input-group">
@@ -40,12 +29,6 @@
             <div class="col">
                 <button type="button" class="btn btn-block btn-lg btn-dark" (click)="this.startBingo()">
                     &gt; Start Bingo Machine</button>
-            </div>
-            <div class="col">
-                <button type="button" class="btn btn-block btn-lg btn-outline-dark" (click)="this.startBingo()"
-                    disabled>
-                    &gt; Show bingo card (TODO)
-                </button>
             </div>
         </div>
     </form>

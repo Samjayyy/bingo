@@ -1,0 +1,69 @@
+<div>
+    <form *ngIf="this.configuring">
+        <h3>New Bingo Card</h3>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="numberOfBalls">Ball count:</label>
+                <input type="number" name="numberOfBalls" id="numberOfBalls" class="form-control"
+                    [(ngModel)]="this.numberOfBalls" min="2" max="1000" [disabled]="!this.configuring" />
+            </div>
+            <div class="form-group col">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="rowCount">Rows:</label>
+                        <input type="number" name="rowCount" id="rowCount" class="form-control"
+                            [(ngModel)]="this.rowCount" [disabled]="!this.configuring" min="1" max="10" />
+                    </div>
+                    <div class="form-group col">
+                        <label for="columnCount">Columns:</label>
+                        <input type="number" name="columnCount" id="columnCount" class="form-control"
+                            [(ngModel)]="this.columnCount" [disabled]="!this.configuring" min="1" max="10" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" autocomplete="off" class="form-control form-control-lg" name="playerid" id="playerid"
+                    placeholder="Type in a random name for you card" [(ngModel)]="this.playerid"
+                    (change)="this.playerid = this.playerid.toLowerCase()" [disabled]="!this.configuring" />
+                <div class="input-group-append" (click)="this.takeRandom()">
+                    <button class="input-group-text" id="takerandomcheck" [disabled]="!this.configuring">
+                        <i class="fa fa-random"></i> Generate
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="this.playerid">
+            <button type="button" class="btn btn-block btn-lg btn-outline-dark" (click)="this.showCard()">
+                &gt; New bingo card
+            </button>
+        </div>
+        <div class="row" *ngIf="!!this.card">
+            <button type="button" class="btn btn-block btn-lg btn-outline-dark" (click)="this.configuring = false">
+                &gt; Cancel
+            </button>
+        </div>
+    </form>
+    <div class="row" *ngIf="!this.configuring">
+        <div class="col-10 border border-dark rounded">
+            <h1 class="text-center">BINGO!</h1>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-block btn-lg btn-outline-dark" (click)="this.configuring = true">
+                New
+            </button>
+        </div>
+    </div>
+    <div *ngIf="!this.configuring && this.card" class="cardsheet">
+        <table class="table table-bordered">
+            <tr *ngFor="let gridRow of this.card.grid; index as r">
+                <td *ngFor="let cell of gridRow; index as c" class="çol cell" (click)="cell.drawn = !cell.drawn">
+                    <div class="bingocell" [class.drawn]="cell.drawn">
+                        {{ cell.val }}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

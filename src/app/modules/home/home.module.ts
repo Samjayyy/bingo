@@ -10,12 +10,14 @@ import { StartGameComponent } from './components/start-game/start-game.component
 import { GameScoreComponent } from './components/drawer-state/drawer-state.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { GaService } from 'src/app/core/services/ext/ga.service';
+import { BingoCardComponent } from './components/bingo-card/bingo-card.component';
 
 @NgModule({
   declarations: [
     RootComponent,
     StartGameComponent,
     BingoDrawerComponent,
+    BingoCardComponent,
     GameScoreComponent,
   ],
   imports: [

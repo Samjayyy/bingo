@@ -1,0 +1,44 @@
+.cardsheet {
+    width: 100%;
+
+    .cell {
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+        font-size: 80px;
+        line-height: 1.35;
+        user-select: none;
+
+        .bingocell {
+            border-radius: 30px;
+
+            &:after {
+                content: "X";
+                left: 0px;
+                top: -20px;
+                position: absolute;
+                color: gold;
+                transition: 0.5s ease;
+                pointer-events: none;
+                font-family: "Caveat Brush", cursive;
+                font-size: 0px;
+                text-align: center;
+                opacity: 0;
+                width: 100%;
+            }
+        }
+
+        .drawn {
+            background-color: lightgrey;
+
+            &:after {
+                font-size: 120px;
+                opacity: .6;
+                height: 100%;
+            }
+        }
+
+    }
+}
