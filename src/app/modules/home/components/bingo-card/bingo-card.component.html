@@ -29,15 +29,22 @@
                     (change)="this.playerid = this.playerid.toLowerCase()" [disabled]="!this.configuring" />
                 <div class="input-group-append" (click)="this.takeRandom()">
                     <button class="input-group-text" id="takerandomcheck" [disabled]="!this.configuring">
-                        <i class="fa fa-random"></i> Generate
+                        <i class="fa fa-random"></i> Random
                     </button>
                 </div>
             </div>
         </div>
         <div class="row" *ngIf="this.playerid">
-            <button type="button" class="btn btn-block btn-lg btn-outline-dark" (click)="this.showCard()">
-                &gt; New bingo card
-            </button>
+            <div class="col">
+                <button type="button" class="btn btn-block btn-lg btn-outline-dark" (click)="this.showCard()">
+                    &gt; New bingo card
+                </button>
+            </div>
+            <div class="col form-group custom-control" *ngIf="this.drawer && this.drawer.drawnNumbers > 0">
+                <input type="checkbox" class="custom-control-input" id="syncFromDrawer" name="syncFromDrawer"
+                    [(ngModel)]="this.syncFromDrawer" />
+                <label class="custom-control-label" for="syncFromDrawer">Mark drawn numbers</label>
+            </div>
         </div>
         <div class="row" *ngIf="!!this.card">
             <button type="button" class="btn btn-block btn-lg btn-outline-dark" (click)="this.configuring = false">

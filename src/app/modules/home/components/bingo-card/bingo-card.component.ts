@@ -22,6 +22,7 @@ export class BingoCardComponent implements OnInit, OnDestroy {
   rowCount = 5;
   numberOfBalls = 75;
   configuring = true;
+  syncFromDrawer = false;
 
   constructor(
     private bingoStore: BingoStore,
@@ -45,7 +46,7 @@ export class BingoCardComponent implements OnInit, OnDestroy {
   ngOnInit() { }
 
   showCard(): void {
-    this.bingoCardStore.createNew(this.playerid, this.numberOfBalls, this.rowCount, this.columnCount);
+    this.bingoCardStore.createNew(this.playerid, this.numberOfBalls, this.rowCount, this.columnCount, this.syncFromDrawer ? this.drawer : undefined);
     // this.gaService.emitEvent(
     //   "bingo",
     //   "card",

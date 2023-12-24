@@ -64,13 +64,6 @@ export class BingoDrawerComponent implements OnInit, OnDestroy {
     this.drawer.next();
   }
 
-  get lastDrawns(): number[] {
-    if (this.drawer.drawnNumbers <= 1) {
-      return [];
-    }
-    return this.drawer.orderedNumbers.slice(0, this.drawer.drawnNumbers - 1).map(x => x + 1);
-  }
-
   trackByFn(n: number): number {
     return n;
   }

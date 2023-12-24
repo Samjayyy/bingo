@@ -35,13 +35,20 @@ export class BingoDrawer {
         this.drawnNumbers++;
     }
 
+    public get allDrawnNumbers(): number[] {
+        if (this.drawnNumbers <= 1) {
+            return [];
+        }
+        return this.orderedNumbers.slice(0, this.drawnNumbers - 1).map(x => x + 1);
+    }
+
     public getNumber(position: number): number {
         if (position < 0 || position >= this.numberOfBalls) {
             return -1;
         }
         return this.orderedNumbers[position] + 1;
     }
-    
+
     public get lastDrawnNumber(): number {
         return this.getNumber(this.drawnNumbers - 1);
     }

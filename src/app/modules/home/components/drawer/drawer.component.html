@@ -16,7 +16,7 @@
     </div>
     <hr />
     <div class="previousDraws">
-      <section *ngFor="let drawnNumber of lastDrawns; index as i; trackBy: trackByFn" class="small stage">
+      <section *ngFor="let drawnNumber of this.drawer.allDrawnNumbers; index as i; trackBy: trackByFn" class="small stage">
         <figure class="ball">
           <span class="number">{{ drawnNumber }}</span>
         </figure>
