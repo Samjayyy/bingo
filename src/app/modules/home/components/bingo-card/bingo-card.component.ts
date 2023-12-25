@@ -48,12 +48,12 @@ export class BingoCardComponent implements OnInit, OnDestroy {
 
   showCard(): void {
     this.bingoCardStore.createNew(this.playerid, this.numberOfBalls, this.rowCount, this.columnCount, this.cardCount, this.syncFromDrawer ? this.drawer : undefined);
-    // this.gaService.emitEvent( // TODO SAM
-    //   "bingo",
-    //   "card",
-    //   this.playerid,
-    //   this.numberOfBalls,
-    // );
+    this.gaService.emitEvent(
+      "bingo",
+      "card",
+      this.playerid,
+      this.cardCount,
+    );
   }
 
   ngOnDestroy(): void {
