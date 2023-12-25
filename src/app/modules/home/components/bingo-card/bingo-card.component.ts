@@ -15,7 +15,7 @@ import { BingoDrawer } from "src/app/shared/models/bingo-drawer.model";
 export class BingoCardComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
   public drawer: BingoDrawer = null;
-  public card: BingoCard = null;
+  public cards: BingoCard[] = null;
 
   playerid = "";
   columnCount = 5;
@@ -23,6 +23,7 @@ export class BingoCardComponent implements OnInit, OnDestroy {
   numberOfBalls = 75;
   configuring = true;
   syncFromDrawer = false;
+  cardCount = 3;
 
   constructor(
     private bingoStore: BingoStore,
@@ -36,27 +37,23 @@ export class BingoCardComponent implements OnInit, OnDestroy {
     this.bingoCardStore.store$
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(store => {
-        if (this.card !== store.data) {
+        if (this.cards !== store.data) {
           this.configuring = false;
         }
-        this.card = store.data;
+        this.cards = store.data;
       });
   }
 
   ngOnInit() { }
 
   showCard(): void {
-    this.bingoCardStore.createNew(this.playerid, this.numberOfBalls, this.rowCount, this.columnCount, this.syncFromDrawer ? this.drawer : undefined);
-    // this.gaService.emitEvent(
+    this.bingoCardStore.createNew(this.playerid, this.numberOfBalls, this.rowCount, this.columnCount, this.cardCount, this.syncFromDrawer ? this.drawer : undefined);
+    // this.gaService.emitEvent( // TODO SAM
     //   "bingo",
     //   "card",
     //   this.playerid,
     //   this.numberOfBalls,
     // );
-  }
-
-  public takeRandom(): void {
-    this.playerid = generateRandomString(5);
   }
 
   ngOnDestroy(): void {

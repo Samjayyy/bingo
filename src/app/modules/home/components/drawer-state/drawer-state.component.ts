@@ -14,7 +14,7 @@ import { BingoCard } from 'src/app/shared/models/bingo-card.model';
 export class GameScoreComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
   public drawer: BingoDrawer = null;
-  public card: BingoCard = null;
+  public cards: BingoCard[] = null;
 
   constructor(
     private bingoStore: BingoStore,
@@ -27,7 +27,7 @@ export class GameScoreComponent implements OnInit, OnDestroy {
       .subscribe(store => this.drawer = store.data);
     this.cardStore.store$
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe(store => this.card = store.data);
+      .subscribe(store => this.cards = store.data);
   }
 
   ngOnDestroy(): void {

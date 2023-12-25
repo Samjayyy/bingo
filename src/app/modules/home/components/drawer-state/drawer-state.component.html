@@ -1,6 +1,6 @@
 <div *ngIf="this.drawer" title="Bingo" class="drawerState" routerLink="drawer">
     Active drawer: {{this.drawer.drawnNumbers ?? 0}} / {{this.drawer.numberOfBalls}}
 </div>
-<div *ngIf="this.card" title="Card" class="cardState" routerLink="card">
-    Active card: {{this.card.seed}} ({{this.card.totalDrawn}} / {{this.card.totalNumbers}})
+<div *ngIf="!!this.cards?.length" title="Card" class="cardState" routerLink="card">
+    {{ this.cards.length }} active card(s)
 </div>

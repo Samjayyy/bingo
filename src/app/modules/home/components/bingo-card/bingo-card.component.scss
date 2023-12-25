@@ -39,6 +39,54 @@
                 height: 100%;
             }
         }
+    }
+}
 
+@media (max-width: 1200px) {
+    .cardsheet {
+        .cell {
+            font-size: 40px;
+
+            .bingocell {
+                &:after {
+                    top: -5px;
+                }
+            }
+
+            .drawn {
+                &:after {
+                    font-size: 60px;
+                }
+            }
+        }
+    }
+}
+
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .cardsheet {
+        max-width: 50%;
+
+        .cell {
+            font-size: 40px;
+
+            .drawn {
+                &:after {
+                    display: none;
+                }
+            }
+        }
+
+        table.table,
+        table.table tr,
+        table.table th,
+        table.table td {
+            border-collapse: collapse !important;
+            border: 5px solid #000 !important;
+        }
     }
 }

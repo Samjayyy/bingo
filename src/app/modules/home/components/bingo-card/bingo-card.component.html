@@ -1,5 +1,5 @@
 <div>
-    <form *ngIf="this.configuring">
+    <form class="d-print-none" *ngIf="this.configuring">
         <h3>New Bingo Card</h3>
         <div class="form-row">
             <div class="form-group col">
@@ -21,23 +21,21 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="input-group">
-                <input type="text" autocomplete="off" class="form-control form-control-lg" name="playerid" id="playerid"
-                    placeholder="Type in a random name for you card" [(ngModel)]="this.playerid"
-                    (change)="this.playerid = this.playerid.toLowerCase()" [disabled]="!this.configuring" />
-                <div class="input-group-append" (click)="this.takeRandom()">
-                    <button class="input-group-text" id="takerandomcheck" [disabled]="!this.configuring">
-                        <i class="fa fa-random"></i> Random
-                    </button>
-                </div>
+            <div class="form-group col">
+                <label for="numberOfCards">Card count:</label>
+                <input type="number" name="numberOfCards" id="numberOfCards" class="form-control"
+                    [(ngModel)]="this.cardCount" min="1" max="9" [disabled]="!this.configuring" />
             </div>
         </div>
-        <div class="row" *ngIf="this.playerid">
+        <div class="form-group">
+            <input type="text" autocomplete="off" class="form-control form-control-lg" name="playerid" id="playerid"
+                placeholder="Specific card or leave blank for random cards" [(ngModel)]="this.playerid"
+                (change)="this.playerid = this.playerid.toLowerCase()" [disabled]="!this.configuring" />
+        </div>
+        <div class="row">
             <div class="col">
                 <button type="button" class="btn btn-block btn-lg btn-outline-dark" (click)="this.showCard()">
-                    &gt; New bingo card
+                    &gt; New bingo cards
                 </button>
             </div>
             <div class="col form-group custom-control" *ngIf="this.drawer && this.drawer.drawnNumbers > 0">
@@ -52,7 +50,7 @@
             </button>
         </div>
     </form>
-    <div class="row" *ngIf="!this.configuring">
+    <div class="row d-print-none" *ngIf="!this.configuring">
         <div class="col-10 border border-dark rounded">
             <h1 class="text-center">BINGO!</h1>
         </div>
@@ -62,15 +60,26 @@
             </button>
         </div>
     </div>
-    <div *ngIf="!this.configuring && this.card" class="cardsheet">
-        <table class="table table-bordered">
-            <tr *ngFor="let gridRow of this.card.grid; index as r">
-                <td *ngFor="let cell of gridRow; index as c" class="çol cell" (click)="cell.drawn = !cell.drawn">
-                    <div class="bingocell" [class.drawn]="cell.drawn">
-                        {{ cell.val }}
-                    </div>
-                </td>
-            </tr>
-        </table>
+    <div class="row" *ngIf="!this.configuring && !!this.cards?.length">
+        <div *ngFor="let card of this.cards" class="cardsheet col">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th [attr.colspan]="card.colCount" class="text-center" scope="col">{{ card.seed }} <span
+                                class="d-print-none">({{ card.totalDrawn}} / {{ card.totalNumbers}})</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let gridRow of card.grid">
+                        <td *ngFor="let cell of gridRow" class="çol cell" (click)="cell.drawn = !cell.drawn"
+                            scope="row">
+                            <div class="bingocell" [class.drawn]="cell.drawn">
+                                {{ cell.val }}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
