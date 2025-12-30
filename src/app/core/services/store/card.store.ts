@@ -10,14 +10,26 @@ export class CardStore extends StoreService<BingoCard[]> {
     super();
   }
 
-  public createNew(playerid: string, numberOfBalls: number, rowCount: number, columnCount: number, cardCount: number, syncFromDrawer?: BingoDrawer): void {
+  public createNew(
+    playerid: string,
+    numberOfBalls: number,
+    rowCount: number,
+    columnCount: number,
+    cardCount: number,
+    syncFromDrawer?: BingoDrawer
+  ): void {
     if (playerid === "") {
       playerid = generateRandomString(5);
     }
     const bingoCards: BingoCard[] = [];
     for (let i = 1; i <= cardCount; i++) {
-      const bingoCard = new BingoCard(cardCount > 1 ? playerid + "-" + i : playerid, numberOfBalls, rowCount, columnCount);
-      syncFromDrawer?.allDrawnNumbers.forEach(n => bingoCard.flipDrawn(n));
+      const bingoCard = new BingoCard(
+        cardCount > 1 ? playerid + "-" + i : playerid,
+        numberOfBalls,
+        rowCount,
+        columnCount
+      );
+      syncFromDrawer?.orderedIndexes.forEach((pos) => bingoCard.flipDrawn(pos));
       bingoCards.push(bingoCard);
     }
     this.next(bingoCards);

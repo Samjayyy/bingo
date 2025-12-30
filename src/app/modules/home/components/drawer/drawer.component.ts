@@ -46,7 +46,7 @@ export class BingoDrawerComponent implements OnInit, OnDestroy {
     if (this.spinning) {
       this.spinning = false;
     }
-    if(this.drawer.drawnNumbers==0){
+    if(this.drawer.drawnCount==0){
       return;
     }
     this.drawer.previous();

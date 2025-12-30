@@ -5,7 +5,7 @@
             <div class="form-group col">
                 <label for="numberOfBalls">Ball count:</label>
                 <input type="number" name="numberOfBalls" id="numberOfBalls" class="form-control"
-                    [(ngModel)]="this.numberOfBalls" min="2" max="1000" [disabled]="!this.configuring" />
+                    [(ngModel)]="this.numberOfBalls" min="2" max="1000" [disabled]="!this.configuring || this.isFixedNumberOfBalls" />
             </div>
             <div class="form-group col">
                 <div class="form-row">
@@ -38,7 +38,7 @@
                     &gt; New bingo cards
                 </button>
             </div>
-            <div class="col form-group custom-control" *ngIf="this.drawer && this.drawer.drawnNumbers > 0">
+            <div class="col form-group custom-control" *ngIf="this.drawer && this.drawer.drawnCount > 0">
                 <input type="checkbox" class="custom-control-input" id="syncFromDrawer" name="syncFromDrawer"
                     [(ngModel)]="this.syncFromDrawer" />
                 <label class="custom-control-label" for="syncFromDrawer">Mark drawn numbers</label>
@@ -61,7 +61,7 @@
         </div>
     </div>
     <div class="row" *ngIf="!this.configuring && !!this.cards?.length">
-        <div *ngFor="let card of this.cards" class="cardsheet col">
+        <div *ngFor="let card of this.cards" class="cardsheet col-12 col-md-6 col-xl-4">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -73,8 +73,8 @@
                     <tr *ngFor="let gridRow of card.grid">
                         <td *ngFor="let cell of gridRow" class="çol cell" (click)="cell.drawn = !cell.drawn"
                             scope="row">
-                            <div class="bingocell" [class.drawn]="cell.drawn">
-                                {{ cell.val }}
+                            <div class="bingocell" [class.drawn]="cell.drawn"  [style.fontSize]="50 / (1+(this.formatValue(cell.val).length/3)) + 'px'">
+                                {{ this.formatValue(cell.val) }}
                             </div>
                         </td>
                     </tr>

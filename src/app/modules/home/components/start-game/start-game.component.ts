@@ -14,6 +14,7 @@ export class StartGameComponent implements OnInit {
   gameid = "";
   cardSize = 5;
   numberOfBalls = 75;
+  isFixedNumberOfBalls: boolean = false;
   typeSecret = false;
   startRandom = false;
 
@@ -22,7 +23,12 @@ export class StartGameComponent implements OnInit {
     private router: Router,
     private gaService: GaService,
     @Inject(DOCUMENT) private document: Document
-  ) { }
+  ) {
+    if (bingoStore.converter.getFixedValueCount() !== undefined) {
+      this.numberOfBalls = bingoStore.converter.getFixedValueCount();
+      this.isFixedNumberOfBalls = true;
+    }
+   }
 
   ngOnInit() { }
 

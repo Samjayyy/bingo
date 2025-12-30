@@ -1,5 +1,6 @@
 .cardsheet {
     width: 100%;
+    min-width: 30vw;
 
     .cell {
         align-items: center;
@@ -13,6 +14,7 @@
 
         .bingocell {
             border-radius: 30px;
+            word-break: break-word;
 
             &:after {
                 content: "X";

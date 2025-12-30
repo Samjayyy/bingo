@@ -1,24 +1,72 @@
 <div *ngIf="this.drawer">
   <div class="btn-group controls" role="group">
-    <button class="btn btn-lg btn-outline-secondary" (click)="this.prev()" [disabled]="this.drawer.drawnNumbers <= 0">Back</button>
-    <button class="btn btn-lg btn-outline-info" (click)="this.next()" [disabled]="!this.drawer.hasNext()">Next</button>
+    <button
+      class="btn btn-lg btn-outline-secondary"
+      (click)="this.prev()"
+      [disabled]="this.drawer.drawnCount <= 0"
+    >
+      Back
+    </button>
+    <button
+      class="btn btn-lg btn-outline-info"
+      (click)="this.next()"
+      [disabled]="!this.drawer.hasNext()"
+    >
+      Next
+    </button>
   </div>
   <div class="drawer">
-    <div *ngIf="this.drawer.drawnNumbers > 0" class="currentdraw">
+    <div *ngIf="this.drawer.drawnCount > 0" class="currentdraw">
       <div *ngIf="this.spinning" class="spinning">
         <img src="./assets/spinning-bingo.gif" alt="Spinning the bingo wheel" />
       </div>
-      <section *ngIf="!this.spinning && this.drawer.drawnNumbers > 0" class="big stage">
-        <figure class="ball">
-          <span class="number rolling">{{ this.drawer.lastDrawnNumber }}</span>
-        </figure>
-      </section>
+      <div *ngIf="!this.spinning && this.drawer.drawnCount > 0" class="row">
+        <div
+          class="col sideimg"
+          *ngIf="!!this.drawer.lastDrawn.imgName?.length"
+        >
+          <img
+            [src]="'assets/puursbende/' + this.drawer.lastDrawn.imgName"
+            class="img-fluid"
+          />
+        </div>
+        <div class="col">
+          <section class="big stage">
+            <figure class="ball">
+              <span
+                class="number rolling"
+                [style.fontSize]="
+                  350 / (1 + this.drawer.lastDrawn.word.length) + 'px'
+                "
+                >{{ this.drawer.lastDrawn.word }}</span
+              >
+            </figure>
+          </section>
+        </div>
+        <div
+          class="col sidedesc"
+          *ngIf="!!this.drawer.lastDrawn.description?.length"
+        >
+          <p>{{ this.drawer.lastDrawn.description }}</p>
+        </div>
+      </div>
     </div>
     <hr />
     <div class="previousDraws">
-      <section *ngFor="let drawnNumber of this.drawer.allDrawnNumbers; index as i; trackBy: trackByFn" class="small stage">
+      <section
+        *ngFor="
+          let drawnValue of this.drawer.allDrawnValues;
+          index as i;
+          trackBy: trackByFn
+        "
+        class="small stage"
+      >
         <figure class="ball">
-          <span class="number">{{ drawnNumber }}</span>
+          <span
+            class="number"
+            [style.fontSize]="60 / (1 + drawnValue.word.length / 4) + 'px'"
+            >{{ drawnValue.word }}</span
+          >
         </figure>
       </section>
     </div>

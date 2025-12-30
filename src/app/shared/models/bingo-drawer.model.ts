@@ -1,56 +1,54 @@
 import * as seedrandom from "seedrandom";
 import { shuffleArray } from "src/app/core/util/arrays";
+import { BingoValue, ValueConverter } from "src/app/core/util/value-converter";
 
 export class BingoDrawer {
-    drawnNumbers: number;
-    orderedNumbers: number[];
-    numberOccurence: number[];
+    drawnCount: number;
+    orderedIndexes: number[];
 
     constructor(
         public readonly seed: string
         , public readonly numberOfBalls: number
+        , public readonly valueConverter: ValueConverter
     ) {
-        this.drawnNumbers = 0;
-        this.orderedNumbers = [...Array(numberOfBalls).keys()];
+        this.drawnCount = 0;
+        this.orderedIndexes = [...Array(numberOfBalls).keys()]; // [0,1,...,N-1]
         seedrandom(seed, { global: true });
-        shuffleArray(this.orderedNumbers);
-
-        this.numberOccurence = [];
-        this.orderedNumbers.forEach((v, ix) => this.numberOccurence[v] = ix + 1);
+        shuffleArray(this.orderedIndexes);
     }
     public hasNext(): boolean {
-        return this.drawnNumbers < this.numberOfBalls;
+        return this.drawnCount < this.numberOfBalls;
     }
 
     public previous(): void {
-        if (this.drawnNumbers <= 0) {
+        if (this.drawnCount <= 0) {
             return;
         }
-        this.drawnNumbers--;
+        this.drawnCount--;
     }
     public next(): void {
         if (!this.hasNext) {
             return;
         }
-        this.drawnNumbers++;
+        this.drawnCount++;
     }
 
-    public get allDrawnNumbers(): number[] {
-        if (this.drawnNumbers <= 1) {
+    public get allDrawnValues(): BingoValue[] {
+        if (this.drawnCount <= 1) {
             return [];
         }
-        return this.orderedNumbers.slice(0, this.drawnNumbers - 1).map(x => x + 1);
+        return this.orderedIndexes.slice(0, this.drawnCount - 1).map(pos => this.valueConverter.getValue(pos));
     }
 
-    public getNumber(position: number): number {
+    public getBingoValue(position: number): BingoValue | undefined {
         if (position < 0 || position >= this.numberOfBalls) {
-            return -1;
+            return undefined;
         }
-        return this.orderedNumbers[position] + 1;
+        return this.valueConverter.getValue(this.orderedIndexes[position]);
     }
 
-    public get lastDrawnNumber(): number {
-        return this.getNumber(this.drawnNumbers - 1);
+    public get lastDrawn(): BingoValue | undefined {
+        return this.getBingoValue(this.drawnCount - 1);
     }
 
 }

@@ -5,7 +5,7 @@
             <div class="form-group col">
                 <label for="numberOfBalls">Ball count:</label>
                 <input type="number" name="numberOfBalls" id="numberOfBalls" class="form-control"
-                    [(ngModel)]="this.numberOfBalls" min="2" max="1000" />
+                    [(ngModel)]="this.numberOfBalls" min="2" max="1000" [disabled]="this.isFixedNumberOfBalls" />
             </div>
         </div>
         <div class="form-group">

@@ -3,8 +3,7 @@ import { Subject, takeUntil } from "rxjs";
 import { GaService } from "src/app/core/services/ext/ga.service";
 import { BingoStore } from "src/app/core/services/store/bingo.store";
 import { CardStore } from "src/app/core/services/store/card.store";
-import { generateRandomString } from "src/app/core/util/rand";
-import { BingoCard, BingoCardCell } from "src/app/shared/models/bingo-card.model";
+import { BingoCard } from "src/app/shared/models/bingo-card.model";
 import { BingoDrawer } from "src/app/shared/models/bingo-drawer.model";
 
 @Component({
@@ -21,6 +20,7 @@ export class BingoCardComponent implements OnInit, OnDestroy {
   columnCount = 5;
   rowCount = 5;
   numberOfBalls = 75;
+  isFixedNumberOfBalls: boolean = false;
   configuring = true;
   syncFromDrawer = false;
   cardCount = 3;
@@ -28,36 +28,47 @@ export class BingoCardComponent implements OnInit, OnDestroy {
   constructor(
     private bingoStore: BingoStore,
     private bingoCardStore: CardStore,
-    private gaService: GaService,
+    private gaService: GaService
   ) {
     this.bingoStore.store$
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe(store => this.drawer = store.data);
+      .subscribe((store) => (this.drawer = store.data));
 
     this.bingoCardStore.store$
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe(store => {
+      .subscribe((store) => {
         if (this.cards !== store.data) {
           this.configuring = false;
         }
         this.cards = store.data;
       });
+
+    if (bingoStore.converter.getFixedValueCount() !== undefined) {
+      this.numberOfBalls = this.bingoStore.converter.getFixedValueCount();
+      this.isFixedNumberOfBalls = true;
+    }
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   showCard(): void {
-    this.bingoCardStore.createNew(this.playerid, this.numberOfBalls, this.rowCount, this.columnCount, this.cardCount, this.syncFromDrawer ? this.drawer : undefined);
-    this.gaService.emitEvent(
-      "bingo",
-      "card",
+    this.bingoCardStore.createNew(
       this.playerid,
+      this.numberOfBalls,
+      this.rowCount,
+      this.columnCount,
       this.cardCount,
+      this.syncFromDrawer ? this.drawer : undefined
     );
+    this.gaService.emitEvent("bingo", "card", this.playerid, this.cardCount);
   }
 
   ngOnDestroy(): void {
     this.unsubscribe.next();
     this.unsubscribe.complete();
+  }
+
+  formatValue(index: number): string{
+    return this.bingoStore.converter.getValue(index).word;
   }
 }
