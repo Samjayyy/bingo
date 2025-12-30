@@ -29,7 +29,11 @@ export class CardStore extends StoreService<BingoCard[]> {
         rowCount,
         columnCount
       );
-      syncFromDrawer?.orderedIndexes.forEach((pos) => bingoCard.flipDrawn(pos));
+      if (!!syncFromDrawer) {
+        for (let i=0;i<syncFromDrawer.drawnCount;i++) {
+          bingoCard.flipDrawn(syncFromDrawer?.orderedIndexes[i]);
+        }
+      }
       bingoCards.push(bingoCard);
     }
     this.next(bingoCards);

@@ -19,7 +19,7 @@
             &:after {
                 content: "X";
                 left: 0px;
-                top: -20px;
+                top: -10px;
                 position: absolute;
                 color: gold;
                 transition: 0.5s ease;
@@ -29,6 +29,7 @@
                 text-align: center;
                 opacity: 0;
                 width: 100%;
+                font-size: 40px;
             }
         }
 
@@ -36,29 +37,8 @@
             background-color: lightgrey;
 
             &:after {
-                font-size: 120px;
                 opacity: .6;
                 height: 100%;
-            }
-        }
-    }
-}
-
-@media (max-width: 1200px) {
-    .cardsheet {
-        .cell {
-            font-size: 40px;
-
-            .bingocell {
-                &:after {
-                    top: -5px;
-                }
-            }
-
-            .drawn {
-                &:after {
-                    font-size: 60px;
-                }
             }
         }
     }

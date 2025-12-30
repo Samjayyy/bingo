@@ -65,7 +65,7 @@ const puursBendeWords: BingoValue[] = [
   },
   {
     word: "Ann VG",
-    description: "For some it is family, for others it could have been family bur for most a classmate.",
+    description: "For some it is family, for others it could have been family but for most a classmate.",
     imgName: "erikannvg.jpg",
   },
   {
